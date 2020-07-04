@@ -1,0 +1,19 @@
+{
+  "name": "apollo-server",
+  "version": "1.0.0",
+  "description": "A local apollo server for your graphql needs.",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon -w index.js"
+  },
+  "keywords": [],
+  "author": "jvikraman <jvikraman@outlook.com>",
+  "license": "ISC",
+  "dependencies": {
+    "apollo-server": "^2.15.0",
+    "graphql": "^15.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}

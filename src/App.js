@@ -1,20 +1,38 @@
-import React from "react";
+import React, { Fragment } from "react";
+import { Query } from "react-apollo";
 
-// Our minimal app boilerplate. Edit this file to get started.
-function App() {
-  return (
-    <div className="w-screen h-screen bg-gray-100 flex flex-col justify-center content-center">
-      <div className="text-4xl text-center">
-        <p className="text-blue-600">React</p>
-        <p className="text-teal-600">Tailwind</p>
-      </div>
-      <div>
-        <p className="text-3xl text-center font-light text-gray-900">
-          Starter Project
-        </p>
-      </div>
+import ListOrders from "./ListOrders";
+import { AddOrder } from "./Order";
+
+// Reusable queries
+import { TOTAL_ORDERS_WITH_STATUS_QUERY } from "./Queries";
+
+// App component that lets us order and remove items
+// from a local apollo server endpoint.
+const App = () => (
+  <div className="p-4">
+    <h1 className="text-xl">React Apollo Client!</h1>
+    <div className="mt-2">
+      <Query query={TOTAL_ORDERS_WITH_STATUS_QUERY}>
+        {({ data, loading, error }) => {
+          if (loading) return <p>Loading...</p>;
+          if (error) return <p>Error: {error.message}</p>;
+
+          const status = data.status.enumValues.map(status => status.name);
+
+          return (
+            <div>
+              <AddOrder status={status} />
+              <ListOrders
+                totalOrders={data.totalOrders}
+                allOrders={data.allOrders}
+              />
+            </div>
+          );
+        }}
+      </Query>
     </div>
-  );
-}
+  </div>
+);
 
 export default App;
